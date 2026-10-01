@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sylvan</title>
+<style>
+:root{--bg:#080912;--panel:#111426;--panel2:#181c32;--text:#fff;--muted:#9da6c8;--line:#2b3150;--a:#9b5cff;--b:#32c8ff}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--text);font-family:Arial,sans-serif;overflow-x:hidden;
+background:
+radial-gradient(circle at 15% 15%,rgba(155,92,255,.42),transparent 28%),
+radial-gradient(circle at 85% 20%,rgba(50,200,255,.30),transparent 25%),
+radial-gradient(circle at 55% 85%,rgba(255,55,180,.22),transparent 30%),
+linear-gradient(135deg,#050611 0%,#0b0920 45%,#070b18 100%);
+position:relative}
+body:before,body:after{content:"";position:fixed;z-index:-1;border-radius:50%;filter:blur(70px);opacity:.45;pointer-events:none}
+body:before{width:330px;height:330px;background:#8d45ff;left:-100px;top:35%;animation:floatA 10s ease-in-out infinite}
+body:after{width:300px;height:300px;background:#16cfff;right:-90px;bottom:5%;animation:floatB 12s ease-in-out infinite}
+@keyframes floatA{50%{transform:translate(90px,-45px) scale(1.12)}}
+@keyframes floatB{50%{transform:translate(-80px,-60px) scale(.9)}}
+body.light{--text:#101322;--muted:#59627d;--line:#d9deec;--panel:#ffffffdd;--panel2:#eef1fadd;
+background:
+radial-gradient(circle at 15% 15%,rgba(155,92,255,.18),transparent 28%),
+radial-gradient(circle at 85% 20%,rgba(50,200,255,.16),transparent 25%),
+linear-gradient(135deg,#eef2ff,#ffffff)}
+.wrap{max-width:1150px;margin:auto;padding:24px 16px 45px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}
+.logo{font-size:34px;font-weight:900;letter-spacing:.1em}.sub{font-size:12px;color:var(--muted)}.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn,.ctrl{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:12px;padding:10px 13px;cursor:pointer}.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+.player{background:linear-gradient(145deg,rgba(21,25,46,.88),rgba(11,13,24,.82));backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:22px;padding:16px;box-shadow:0 20px 60px #0007}.light .player,.light .card{background:var(--panel)}
+.video{width:100%;display:block;background:#000;border-radius:15px;max-height:480px}.now{display:flex;gap:12px;align-items:center;margin-top:13px}.cover{width:60px;height:60px;object-fit:cover;border-radius:12px}
+.title{font-weight:900;font-size:20px}.muted{color:var(--muted);font-size:12px;margin-top:4px}.controls{display:flex;justify-content:center;gap:9px;margin:15px 0 10px}
+.ctrl{width:45px;height:45px;border-radius:50%;font-size:16px}.main{background:linear-gradient(135deg,var(--a),var(--b));border:0;color:#fff}
+.progress{height:8px;background:#252a43;border-radius:10px;cursor:pointer}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--a),var(--b));border-radius:10px}.times{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-top:6px}.status{text-align:center;color:var(--muted);font-size:12px;min-height:17px;margin-top:7px}
+.eq{margin-top:15px;border:1px solid var(--line);border-radius:15px;background:var(--panel2);padding:13px}.eqhead{display:flex;justify-content:space-between}.eqstate{font-size:12px;color:var(--muted)}.eqgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}.eqgrid label{font-size:12px;color:var(--muted)}.eqgrid span{float:right;color:var(--text);font-weight:700}.eqgrid input{width:100%;margin-top:8px}
+.cards{display:grid;grid-template-columns:1fr;gap:12px}.card{background:linear-gradient(145deg,rgba(23,26,49,.84),rgba(14,16,32,.78));backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:18px;padding:10px;cursor:pointer}.card.active{border-color:var(--a);box-shadow:0 0 25px #8e5cff33}.card img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:13px}.ct{font-weight:800;margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cs{font-size:11px;color:var(--muted);margin-top:3px}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.cards{grid-template-columns:repeat(3,1fr)}.logo{font-size:28px}}@media(max-width:480px){.eqgrid{grid-template-columns:1fr}.card{padding:7px}.ct{font-size:12px}}
+</style>
+</head>
+<body><div class="wrap">
+<header class="top"><div><div class="logo">SYLVAN</div><div class="sub">music • video • studio</div></div>
+<div class="actions"><button class="btn" id="instaBtn">◎ Instagram</button><button class="btn" id="sunoBtn">♫ Suno</button><button class="btn" id="yt">▶ YouTube</button><button class="btn" id="theme">☀️ Licht</button></div></header>
+<main class="hero"><section class="player">
+<video id="video" class="video" playsinline preload="metadata" controls></video>
+<div class="now"><img id="cover" class="cover" src="covers/slippers.jpg"><div><div id="title" class="title">Slippers Scheef</div><div class="muted">Sylvan</div></div></div>
+<div class="controls"><button class="ctrl" id="back">↶</button><button class="ctrl main" id="play">▶</button><button class="ctrl" id="forward">↷</button></div>
+<div class="progress" id="progress"><div class="bar" id="bar"></div></div><div class="times"><span id="current">0:00</span><span id="duration">0:00</span></div><div class="status" id="status"></div>
+</section>
+<section class="cards">
+<article class="card active" data-i="0"><img src="covers/slippers.jpg"><div class="ct">Slippers Scheef</div><div class="cs">Video 1</div></article>
+<article class="card" data-i="1"><img src="covers/blonde.jpg"><div class="ct">Blonde Meisje Engels</div><div class="cs">Video 2</div></article>
+<article class="card" data-i="2"><img src="covers/pan.jpg"><div class="ct">Pan Flute &amp; Piano</div><div class="cs">Video 3</div></article>
+</section></main></div>
+<script>
+(()=>{
+'use strict';
+const video=document.getElementById('video'),play=document.getElementById('play'),status=document.getElementById('status');
+const files=['Slippers Scheef.mp4','Blonde Meisje Engels.mp4','Pan Flute & Piano.mp4'];
+const names=['Slippers Scheef','Blonde Meisje Engels','Pan Flute & Piano'];
+const covers=['covers/slippers.jpg','covers/blonde.jpg','covers/pan.jpg'];
+const cards=[...document.querySelectorAll('.card')];let current=0;
+const fmt=x=>Number.isFinite(x)?Math.floor(x/60)+':'+String(Math.floor(x%60)).padStart(2,'0'):'0:00';
+function setStatus(x){status.textContent=x||''}
+function loadTrack(i,autoplay=true){
+ current=(i+3)%3; video.pause(); video.src=files[current]; video.load();
+ document.getElementById('title').textContent=names[current];document.getElementById('cover').src=covers[current];
+ cards.forEach((c,n)=>c.classList.toggle('active',n===current));
+ document.getElementById('current').textContent='0:00';document.getElementById('bar').style.width='0%';setStatus('Laden…');
+ if(autoplay){const p=video.play();if(p&&p.catch)p.catch(()=>setStatus('Druk op ▶ om af te spelen.'))}
+}
+play.onclick=()=>{if(video.paused){const p=video.play();if(p&&p.catch)p.catch(()=>{})}else video.pause()};
+document.getElementById('back').onclick=()=>video.currentTime=Math.max(0,video.currentTime-10);
+document.getElementById('forward').onclick=()=>{if(Number.isFinite(video.duration))video.currentTime=Math.min(video.duration,video.currentTime+10)};
+cards.forEach(c=>c.onclick=()=>loadTrack(Number(c.dataset.i),true));
+video.onplay=()=>{play.textContent='❚❚';setStatus('')};video.onpause=()=>play.textContent='▶';
+video.onloadedmetadata=()=>{document.getElementById('duration').textContent=fmt(video.duration);setStatus('')};
+video.ontimeupdate=()=>{document.getElementById('current').textContent=fmt(video.currentTime);if(video.duration)document.getElementById('bar').style.width=(video.currentTime/video.duration*100)+'%'};
+video.onwaiting=()=>setStatus('Bufferen…');video.onerror=()=>setStatus('Video kon niet worden geladen.');video.onended=()=>loadTrack(current+1,true);
+document.getElementById('progress').onclick=e=>{if(!video.duration)return;const r=e.currentTarget.getBoundingClientRect();video.currentTime=Math.max(0,Math.min(video.duration,((e.clientX-r.left)/r.width)*video.duration))};
+document.getElementById('instaBtn').onclick=()=>window.open('https://www.instagram.com/','_blank','noopener,noreferrer');document.getElementById('sunoBtn').onclick=()=>window.open('https://suno.com/','_blank','noopener,noreferrer');document.getElementById('yt').onclick=()=>window.open('https://www.youtube.com/','_blank','noopener,noreferrer');
+document.getElementById('theme').onclick=()=>{document.body.classList.toggle('light');localStorage.setItem('sylvan-light',document.body.classList.contains('light')?'1':'0')};
+if(localStorage.getItem('sylvan-light')==='1')document.body.classList.add('light');
+
+
+})();
+</script></body></html>
